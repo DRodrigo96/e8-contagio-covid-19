@@ -8,17 +8,17 @@ Created on Sun Aug 16 22:43:44 2020
 # PARTE 3: FOLIUM: Python, JavaScript, CSS & HTML
 
 import folium
-from folium import Map, Marker, GeoJson, LayerControl
-from folium import plugins
-from PIL import ImageFont
-import json
+from folium import Map
 from folium.plugins import MarkerCluster
-from jinja2 import Template
+from PIL import ImageFont
 import pandas as pd
+import os
 from usrfunctions import *
 
+os.chdir('../')
+
 # MAPA
-dfGeoref = pd.read_pkl('dfGeoref.pkl')
+dfGeoref = pd.read_pickle('temp/dfGeoref.pkl')
 
 latitude = dfGeoref['LATITUD']
 longitude = dfGeoref['LONGITUD']
@@ -28,8 +28,7 @@ departamento = dfGeoref['DEPARTAMENTO']
 numero = dfGeoref['FECHA_CORTE']
 edades = dfGeoref['EDAD']
 
-
-with open("JAWGMAP API KEY.txt", 'r') as file:
+with open("keys/JAWGMAP API KEY.txt", 'r') as file:
     txttoken = file.read()
 
 coor_PE = (-8.043040, -75.534517)
@@ -43,7 +42,6 @@ maPE = Map(
     Elaboración: <a href="https://www.linkedin.com/in/rodrigosanchezn/">David Sánchez</a>.
     '''
     )
-
 
 contagio = MarkerCluster(icon_create_function=icon_create_function()).add_to(maPE)
 font = ImageFont.truetype('times.ttf', 12)
@@ -63,8 +61,9 @@ for lat, lon, dep, pro, dis, num, edad in zip(latitude,longitude, departamento, 
 maPE.get_root().html.add_child(folium.Element(legend_html()))
 maPE.get_root().html.add_child(folium.Element(title_html()))
 
-maPE.save("CONTAGIOS COVID19_MORDOR.html")
+maPE.save("output/COVID19-MAP.html")
 maPE
 
 import webbrowser
-webbrowser.open("CONTAGIOS COVID19.html",new=2)
+html_path = 'file:///' + os.getcwd() + '/output/COVID19-MAP.html'
+webbrowser.open(html_path, new=2)

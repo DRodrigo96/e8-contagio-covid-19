@@ -1,6 +1,8 @@
 
 
 from folium import Marker
+from jinja2 import Template
+import json
 
 # color code function
 def colorcode(x):
