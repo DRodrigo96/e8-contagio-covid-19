@@ -1,0 +1,11 @@
+/resources/home/
+/private/*
+!/private/keys/
+!/private/.gitkeep
+/private/keys/*
+!/private/keys/.gitkeep
+/temp/*
+!/temp/.gitkeep
+__pycache__/
+.ipynb_checkpoints
+/data/positivos_covid.csv
